@@ -1,0 +1,675 @@
+{
+  "questions": [
+    {
+      "id": "coding-arrays-second-largest",
+      "topic": "Arrays",
+      "title": "Second Largest Element",
+      "difficulty": "Beginner",
+      "description": "Given an array of integers, return the second largest distinct value. If it does not exist, return -1.",
+      "inputFormat": "One line: the array elements separated by spaces.",
+      "outputFormat": "The second largest distinct value, or -1.",
+      "constraints": [
+        "1 ≤ nums.length ≤ 10⁵",
+        "-10⁹ ≤ nums[i] ≤ 10⁹",
+        "Aim for O(n) time and O(1) extra space."
+      ],
+      "examples": [
+        {
+          "input": "12 35 1 10 34 1",
+          "output": "34"
+        },
+        {
+          "input": "10 10 10",
+          "output": "-1",
+          "explanation": "There is no second distinct value."
+        }
+      ],
+      "starterCode": {
+        "JAVA": "import java.io.*;\nimport java.util.*;\n\npublic class Main {\n\n    // Return the second largest distinct value, or -1 if it does not exist.\n    static int secondLargest(int[] nums) {\n        // Write your solution here\n        return -1;\n    }\n\n    static int[] parseInts(String line) {\n        line = line == null ? \"\" : line.trim();\n        if (line.isEmpty()) return new int[0];\n        return Arrays.stream(line.split(\"\\\\s+\")).mapToInt(Integer::parseInt).toArray();\n    }\n\n    public static void main(String[] args) throws IOException {\n        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));\n        int[] nums = parseInts(in.readLine());\n        System.out.println(secondLargest(nums));\n    }\n}\n",
+        "PYTHON": "import sys\n\ndef second_largest(nums):\n    # Write your solution here\n    return -1\n\n\ndef main():\n    lines = sys.stdin.read().split(\"\\n\")\n    nums = [int(x) for x in lines[0].split()]\n    print(second_largest(nums))\n\n\nmain()\n",
+        "JAVASCRIPT": "function secondLargest(nums) {\n  // Write your solution here\n  return -1;\n}\n\nconst lines = require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\").map((line) => line.replace(/\\r$/, \"\"));\nconst nums = lines[0].trim() ? lines[0].trim().split(/\\s+/).map(Number) : [];\nconsole.log(String(secondLargest(nums)));\n",
+        "CPP": "#include <bits/stdc++.h>\nusing namespace std;\n\nint secondLargest(vector<int>& nums) {\n    // Write your solution here\n    return -1;\n}\n\nvector<int> parseInts(const string& line) {\n    vector<int> values;\n    istringstream in(line);\n    int value;\n    while (in >> value) values.push_back(value);\n    return values;\n}\n\nint main() {\n    string line;\n    getline(cin, line);\n    vector<int> nums = parseInts(line);\n    cout << secondLargest(nums) << endl;\n    return 0;\n}\n"
+      },
+      "sampleTests": [
+        {
+          "stdin": "12 35 1 10 34 1",
+          "expectedOutput": "34"
+        },
+        {
+          "stdin": "10 10 10",
+          "expectedOutput": "-1"
+        }
+      ],
+      "hiddenTests": [
+        {
+          "stdin": "12 35 1 10 34 1",
+          "expectedOutput": "34"
+        },
+        {
+          "stdin": "5 9",
+          "expectedOutput": "5"
+        },
+        {
+          "stdin": "10 10 10",
+          "expectedOutput": "-1"
+        },
+        {
+          "stdin": "-5 -1 -3 -1",
+          "expectedOutput": "-3"
+        },
+        {
+          "stdin": "7",
+          "expectedOutput": "-1"
+        },
+        {
+          "stdin": "1000000000 -1000000000 999999999",
+          "expectedOutput": "999999999"
+        }
+      ],
+      "timeLimitSeconds": 2.5,
+      "memoryLimitKb": 256000
+    },
+    {
+      "id": "coding-strings-valid-palindrome",
+      "topic": "Strings",
+      "title": "Valid Palindrome",
+      "difficulty": "Beginner",
+      "description": "Return true if the string reads the same forward and backward after removing non-alphanumeric characters and ignoring case.",
+      "inputFormat": "One line: the string s (it may contain spaces and punctuation).",
+      "outputFormat": "true or false.",
+      "constraints": [
+        "1 ≤ s.length ≤ 2 × 10⁵",
+        "s contains printable ASCII characters."
+      ],
+      "examples": [
+        {
+          "input": "A man, a plan, a canal: Panama",
+          "output": "true"
+        },
+        {
+          "input": "race a car",
+          "output": "false"
+        }
+      ],
+      "starterCode": {
+        "JAVA": "import java.io.*;\nimport java.util.*;\n\npublic class Main {\n\n    static boolean isPalindrome(String s) {\n        // Write your solution here\n        return false;\n    }\n\n    static int[] parseInts(String line) {\n        line = line == null ? \"\" : line.trim();\n        if (line.isEmpty()) return new int[0];\n        return Arrays.stream(line.split(\"\\\\s+\")).mapToInt(Integer::parseInt).toArray();\n    }\n\n    public static void main(String[] args) throws IOException {\n        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));\n        String s = in.readLine();\n        System.out.println(isPalindrome(s == null ? \"\" : s));\n    }\n}\n",
+        "PYTHON": "import sys\n\ndef is_palindrome(s):\n    # Write your solution here\n    return False\n\n\ndef main():\n    lines = sys.stdin.read().split(\"\\n\")\n    s = lines[0].rstrip(\"\\r\")\n    print(\"true\" if is_palindrome(s) else \"false\")\n\n\nmain()\n",
+        "JAVASCRIPT": "function isPalindrome(s) {\n  // Write your solution here\n  return false;\n}\n\nconst lines = require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\").map((line) => line.replace(/\\r$/, \"\"));\nconsole.log(String(isPalindrome(lines[0])));\n",
+        "CPP": "#include <bits/stdc++.h>\nusing namespace std;\n\nbool isPalindrome(string s) {\n    // Write your solution here\n    return false;\n}\n\nint main() {\n    string s;\n    getline(cin, s);\n    if (!s.empty() && s.back() == '\\r') s.pop_back();\n    cout << (isPalindrome(s) ? \"true\" : \"false\") << endl;\n    return 0;\n}\n"
+      },
+      "sampleTests": [
+        {
+          "stdin": "A man, a plan, a canal: Panama",
+          "expectedOutput": "true"
+        },
+        {
+          "stdin": "race a car",
+          "expectedOutput": "false"
+        }
+      ],
+      "hiddenTests": [
+        {
+          "stdin": "A man, a plan, a canal: Panama",
+          "expectedOutput": "true"
+        },
+        {
+          "stdin": "race a car",
+          "expectedOutput": "false"
+        },
+        {
+          "stdin": " ",
+          "expectedOutput": "true"
+        },
+        {
+          "stdin": "No 'x' in Nixon",
+          "expectedOutput": "true"
+        },
+        {
+          "stdin": "ab",
+          "expectedOutput": "false"
+        },
+        {
+          "stdin": "0P",
+          "expectedOutput": "false"
+        }
+      ],
+      "timeLimitSeconds": 2.5,
+      "memoryLimitKb": 256000
+    },
+    {
+      "id": "coding-linked-lists-reverse",
+      "topic": "Linked Lists",
+      "title": "Reverse a Linked List",
+      "difficulty": "Beginner",
+      "description": "Given the head of a singly linked list, reverse the list and return the new head. A ListNode class with val and next is provided; the driver builds the list from the input and prints the result.",
+      "inputFormat": "One line: the node values in order, separated by spaces (an empty line is an empty list).",
+      "outputFormat": "The reversed values separated by spaces (an empty line for an empty list).",
+      "constraints": [
+        "0 ≤ number of nodes ≤ 5000",
+        "Solve it iteratively in O(n) time and O(1) space."
+      ],
+      "examples": [
+        {
+          "input": "1 2 3 4 5",
+          "output": "5 4 3 2 1"
+        },
+        {
+          "input": "1 2",
+          "output": "2 1"
+        }
+      ],
+      "starterCode": {
+        "JAVA": "import java.io.*;\nimport java.util.*;\n\npublic class Main {\n\n    static class ListNode {\n        int val;\n        ListNode next;\n        ListNode(int val) { this.val = val; }\n    }\n\n    static ListNode reverseList(ListNode head) {\n        // Write your solution here\n        return head;\n    }\n\n    static int[] parseInts(String line) {\n        line = line == null ? \"\" : line.trim();\n        if (line.isEmpty()) return new int[0];\n        return Arrays.stream(line.split(\"\\\\s+\")).mapToInt(Integer::parseInt).toArray();\n    }\n\n    public static void main(String[] args) throws IOException {\n        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));\n        ListNode dummy = new ListNode(0), tail = dummy;\n        for (int value : parseInts(in.readLine())) { tail.next = new ListNode(value); tail = tail.next; }\n        StringBuilder out = new StringBuilder();\n        for (ListNode node = reverseList(dummy.next); node != null; node = node.next) {\n            if (out.length() > 0) out.append(' ');\n            out.append(node.val);\n        }\n        System.out.println(out);\n    }\n}\n",
+        "PYTHON": "import sys\n\nclass ListNode:\n    def __init__(self, val, next=None):\n        self.val = val\n        self.next = next\n\n\ndef reverse_list(head):\n    # Write your solution here\n    return head\n\n\ndef main():\n    lines = sys.stdin.read().split(\"\\n\")\n    head = None\n    for value in reversed([int(x) for x in lines[0].split()]):\n        head = ListNode(value, head)\n    out = []\n    node = reverse_list(head)\n    while node:\n        out.append(str(node.val))\n        node = node.next\n    print(\" \".join(out))\n\n\nmain()\n",
+        "JAVASCRIPT": "class ListNode {\n  constructor(val, next = null) {\n    this.val = val;\n    this.next = next;\n  }\n}\n\nfunction reverseList(head) {\n  // Write your solution here\n  return head;\n}\n\nconst lines = require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\").map((line) => line.replace(/\\r$/, \"\"));\nlet head = null;\nconst values = lines[0].trim() ? lines[0].trim().split(/\\s+/).map(Number) : [];\nfor (let i = values.length - 1; i >= 0; i--) head = new ListNode(values[i], head);\nconst out = [];\nfor (let node = reverseList(head); node; node = node.next) out.push(node.val);\nconsole.log(out.join(\" \"));\n",
+        "CPP": "#include <bits/stdc++.h>\nusing namespace std;\n\nstruct ListNode {\n    int val;\n    ListNode* next;\n    ListNode(int v) : val(v), next(nullptr) {}\n};\n\nListNode* reverseList(ListNode* head) {\n    // Write your solution here\n    return head;\n}\n\nvector<int> parseInts(const string& line) {\n    vector<int> values;\n    istringstream in(line);\n    int value;\n    while (in >> value) values.push_back(value);\n    return values;\n}\n\nint main() {\n    string line;\n    getline(cin, line);\n    ListNode dummy(0);\n    ListNode* tail = &dummy;\n    for (int value : parseInts(line)) { tail->next = new ListNode(value); tail = tail->next; }\n    string out;\n    for (ListNode* node = reverseList(dummy.next); node; node = node->next) {\n        if (!out.empty()) out += ' ';\n        out += to_string(node->val);\n    }\n    cout << out << endl;\n    return 0;\n}\n"
+      },
+      "sampleTests": [
+        {
+          "stdin": "1 2 3 4 5",
+          "expectedOutput": "5 4 3 2 1"
+        },
+        {
+          "stdin": "1 2",
+          "expectedOutput": "2 1"
+        }
+      ],
+      "hiddenTests": [
+        {
+          "stdin": "1 2 3 4 5",
+          "expectedOutput": "5 4 3 2 1"
+        },
+        {
+          "stdin": "1 2",
+          "expectedOutput": "2 1"
+        },
+        {
+          "stdin": "",
+          "expectedOutput": ""
+        },
+        {
+          "stdin": "7",
+          "expectedOutput": "7"
+        },
+        {
+          "stdin": "-1 0 1 0 -1",
+          "expectedOutput": "-1 0 1 0 -1"
+        },
+        {
+          "stdin": "10 20 30 40 50 60",
+          "expectedOutput": "60 50 40 30 20 10"
+        }
+      ],
+      "timeLimitSeconds": 2.5,
+      "memoryLimitKb": 256000
+    },
+    {
+      "id": "coding-stacks-valid-parentheses",
+      "topic": "Stacks",
+      "title": "Valid Parentheses",
+      "difficulty": "Beginner",
+      "description": "Given a string containing only ()[]{} characters, return true if every bracket is closed by the same type in the correct order.",
+      "inputFormat": "One line: the bracket string s.",
+      "outputFormat": "true or false.",
+      "constraints": [
+        "1 ≤ s.length ≤ 10⁴",
+        "Use a stack for O(n) time."
+      ],
+      "examples": [
+        {
+          "input": "()[]{}",
+          "output": "true"
+        },
+        {
+          "input": "(]",
+          "output": "false"
+        }
+      ],
+      "starterCode": {
+        "JAVA": "import java.io.*;\nimport java.util.*;\n\npublic class Main {\n\n    static boolean isValid(String s) {\n        // Write your solution here\n        return false;\n    }\n\n    static int[] parseInts(String line) {\n        line = line == null ? \"\" : line.trim();\n        if (line.isEmpty()) return new int[0];\n        return Arrays.stream(line.split(\"\\\\s+\")).mapToInt(Integer::parseInt).toArray();\n    }\n\n    public static void main(String[] args) throws IOException {\n        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));\n        String s = in.readLine();\n        System.out.println(isValid(s == null ? \"\" : s.trim()));\n    }\n}\n",
+        "PYTHON": "import sys\n\ndef is_valid(s):\n    # Write your solution here\n    return False\n\n\ndef main():\n    lines = sys.stdin.read().split(\"\\n\")\n    print(\"true\" if is_valid(lines[0].strip()) else \"false\")\n\n\nmain()\n",
+        "JAVASCRIPT": "function isValid(s) {\n  // Write your solution here\n  return false;\n}\n\nconst lines = require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\").map((line) => line.replace(/\\r$/, \"\"));\nconsole.log(String(isValid(lines[0].trim())));\n",
+        "CPP": "#include <bits/stdc++.h>\nusing namespace std;\n\nbool isValid(string s) {\n    // Write your solution here\n    return false;\n}\n\nint main() {\n    string s;\n    getline(cin, s);\n    s.erase(remove_if(s.begin(), s.end(), ::isspace), s.end());\n    cout << (isValid(s) ? \"true\" : \"false\") << endl;\n    return 0;\n}\n"
+      },
+      "sampleTests": [
+        {
+          "stdin": "()[]{}",
+          "expectedOutput": "true"
+        },
+        {
+          "stdin": "(]",
+          "expectedOutput": "false"
+        }
+      ],
+      "hiddenTests": [
+        {
+          "stdin": "()[]{}",
+          "expectedOutput": "true"
+        },
+        {
+          "stdin": "{[]}",
+          "expectedOutput": "true"
+        },
+        {
+          "stdin": "([)]",
+          "expectedOutput": "false"
+        },
+        {
+          "stdin": "(((",
+          "expectedOutput": "false"
+        },
+        {
+          "stdin": "]",
+          "expectedOutput": "false"
+        },
+        {
+          "stdin": "{[()()]}",
+          "expectedOutput": "true"
+        }
+      ],
+      "timeLimitSeconds": 2.5,
+      "memoryLimitKb": 256000
+    },
+    {
+      "id": "coding-queues-generate-binary",
+      "topic": "Queues",
+      "title": "Generate Binary Numbers",
+      "difficulty": "Beginner",
+      "description": "Given n, return the binary representations of the numbers 1 to n in order, using a queue: dequeue x, then enqueue x + \"0\" and x + \"1\".",
+      "inputFormat": "One line: the integer n.",
+      "outputFormat": "The binary strings for 1..n separated by spaces.",
+      "constraints": [
+        "1 ≤ n ≤ 10⁴"
+      ],
+      "examples": [
+        {
+          "input": "3",
+          "output": "1 10 11"
+        },
+        {
+          "input": "5",
+          "output": "1 10 11 100 101"
+        }
+      ],
+      "starterCode": {
+        "JAVA": "import java.io.*;\nimport java.util.*;\n\npublic class Main {\n\n    static List<String> generateBinary(int n) {\n        // Write your solution here\n        return new ArrayList<>();\n    }\n\n    static int[] parseInts(String line) {\n        line = line == null ? \"\" : line.trim();\n        if (line.isEmpty()) return new int[0];\n        return Arrays.stream(line.split(\"\\\\s+\")).mapToInt(Integer::parseInt).toArray();\n    }\n\n    public static void main(String[] args) throws IOException {\n        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));\n        int n = Integer.parseInt(in.readLine().trim());\n        System.out.println(String.join(\" \", generateBinary(n)));\n    }\n}\n",
+        "PYTHON": "import sys\n\ndef generate_binary(n):\n    # Write your solution here\n    return []\n\n\ndef main():\n    lines = sys.stdin.read().split(\"\\n\")\n    n = int(lines[0])\n    print(\" \".join(generate_binary(n)))\n\n\nmain()\n",
+        "JAVASCRIPT": "function generateBinary(n) {\n  // Write your solution here\n  return [];\n}\n\nconst lines = require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\").map((line) => line.replace(/\\r$/, \"\"));\nconsole.log(generateBinary(Number(lines[0])).join(\" \"));\n",
+        "CPP": "#include <bits/stdc++.h>\nusing namespace std;\n\nvector<string> generateBinary(int n) {\n    // Write your solution here\n    return {};\n}\n\nint main() {\n    int n;\n    cin >> n;\n    vector<string> values = generateBinary(n);\n    for (size_t i = 0; i < values.size(); i++) cout << (i ? \" \" : \"\") << values[i];\n    cout << endl;\n    return 0;\n}\n"
+      },
+      "sampleTests": [
+        {
+          "stdin": "3",
+          "expectedOutput": "1 10 11"
+        },
+        {
+          "stdin": "5",
+          "expectedOutput": "1 10 11 100 101"
+        }
+      ],
+      "hiddenTests": [
+        {
+          "stdin": "1",
+          "expectedOutput": "1"
+        },
+        {
+          "stdin": "3",
+          "expectedOutput": "1 10 11"
+        },
+        {
+          "stdin": "5",
+          "expectedOutput": "1 10 11 100 101"
+        },
+        {
+          "stdin": "8",
+          "expectedOutput": "1 10 11 100 101 110 111 1000"
+        },
+        {
+          "stdin": "16",
+          "expectedOutput": "1 10 11 100 101 110 111 1000 1001 1010 1011 1100 1101 1110 1111 10000"
+        }
+      ],
+      "timeLimitSeconds": 2.5,
+      "memoryLimitKb": 256000
+    },
+    {
+      "id": "coding-trees-max-depth",
+      "topic": "Trees",
+      "title": "Maximum Depth of Binary Tree",
+      "difficulty": "Intermediate",
+      "description": "Return the maximum depth of a binary tree — the number of nodes on the longest path from the root to a leaf. A TreeNode class is provided; the driver builds the tree from level-order input.",
+      "inputFormat": "One line: the tree in level order, values separated by spaces, \"null\" for a missing child (an empty line is an empty tree).",
+      "outputFormat": "The maximum depth.",
+      "constraints": [
+        "0 ≤ number of nodes ≤ 10⁴",
+        "Recursive or BFS solutions are both acceptable."
+      ],
+      "examples": [
+        {
+          "input": "3 9 20 null null 15 7",
+          "output": "3"
+        },
+        {
+          "input": "1 null 2",
+          "output": "2"
+        }
+      ],
+      "starterCode": {
+        "JAVA": "import java.io.*;\nimport java.util.*;\n\npublic class Main {\n\n    static class TreeNode {\n        int val;\n        TreeNode left, right;\n        TreeNode(int val) { this.val = val; }\n    }\n\n    static TreeNode buildTree(String line) {\n        String[] tokens = line == null || line.trim().isEmpty() ? new String[0] : line.trim().split(\"\\\\s+\");\n        if (tokens.length == 0 || tokens[0].equals(\"null\")) return null;\n        TreeNode root = new TreeNode(Integer.parseInt(tokens[0]));\n        Deque<TreeNode> queue = new ArrayDeque<>();\n        queue.add(root);\n        int i = 1;\n        while (!queue.isEmpty() && i < tokens.length) {\n            TreeNode node = queue.poll();\n            if (i < tokens.length && !tokens[i].equals(\"null\")) { node.left = new TreeNode(Integer.parseInt(tokens[i])); queue.add(node.left); }\n            i++;\n            if (i < tokens.length && !tokens[i].equals(\"null\")) { node.right = new TreeNode(Integer.parseInt(tokens[i])); queue.add(node.right); }\n            i++;\n        }\n        return root;\n    }\n\n    static int maxDepth(TreeNode root) {\n        // Write your solution here\n        return 0;\n    }\n\n    static int[] parseInts(String line) {\n        line = line == null ? \"\" : line.trim();\n        if (line.isEmpty()) return new int[0];\n        return Arrays.stream(line.split(\"\\\\s+\")).mapToInt(Integer::parseInt).toArray();\n    }\n\n    public static void main(String[] args) throws IOException {\n        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));\n        System.out.println(maxDepth(buildTree(in.readLine())));\n    }\n}\n",
+        "PYTHON": "import sys\n\nfrom collections import deque\n\n\nclass TreeNode:\n    def __init__(self, val):\n        self.val = val\n        self.left = None\n        self.right = None\n\n\ndef max_depth(root):\n    # Write your solution here\n    return 0\n\n\ndef build_tree(tokens):\n    if not tokens or tokens[0] == \"null\":\n        return None\n    root = TreeNode(int(tokens[0]))\n    queue = deque([root])\n    i = 1\n    while queue and i < len(tokens):\n        node = queue.popleft()\n        if i < len(tokens) and tokens[i] != \"null\":\n            node.left = TreeNode(int(tokens[i]))\n            queue.append(node.left)\n        i += 1\n        if i < len(tokens) and tokens[i] != \"null\":\n            node.right = TreeNode(int(tokens[i]))\n            queue.append(node.right)\n        i += 1\n    return root\n\n\ndef main():\n    lines = sys.stdin.read().split(\"\\n\")\n    print(max_depth(build_tree(lines[0].split())))\n\n\nmain()\n",
+        "JAVASCRIPT": "class TreeNode {\n  constructor(val) {\n    this.val = val;\n    this.left = null;\n    this.right = null;\n  }\n}\n\nfunction maxDepth(root) {\n  // Write your solution here\n  return 0;\n}\n\nfunction buildTree(tokens) {\n  if (!tokens.length || tokens[0] === \"null\") return null;\n  const root = new TreeNode(Number(tokens[0]));\n  const queue = [root];\n  let i = 1;\n  while (queue.length && i < tokens.length) {\n    const node = queue.shift();\n    if (i < tokens.length && tokens[i] !== \"null\") { node.left = new TreeNode(Number(tokens[i])); queue.push(node.left); }\n    i++;\n    if (i < tokens.length && tokens[i] !== \"null\") { node.right = new TreeNode(Number(tokens[i])); queue.push(node.right); }\n    i++;\n  }\n  return root;\n}\n\nconst lines = require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\").map((line) => line.replace(/\\r$/, \"\"));\nconsole.log(String(maxDepth(buildTree(lines[0].trim() ? lines[0].trim().split(/\\s+/) : []))));\n",
+        "CPP": "#include <bits/stdc++.h>\nusing namespace std;\n\nstruct TreeNode {\n    int val;\n    TreeNode* left;\n    TreeNode* right;\n    TreeNode(int v) : val(v), left(nullptr), right(nullptr) {}\n};\n\nint maxDepth(TreeNode* root) {\n    // Write your solution here\n    return 0;\n}\n\nTreeNode* buildTree(const vector<string>& tokens) {\n    if (tokens.empty() || tokens[0] == \"null\") return nullptr;\n    TreeNode* root = new TreeNode(stoi(tokens[0]));\n    queue<TreeNode*> pending;\n    pending.push(root);\n    size_t i = 1;\n    while (!pending.empty() && i < tokens.size()) {\n        TreeNode* node = pending.front();\n        pending.pop();\n        if (i < tokens.size() && tokens[i] != \"null\") { node->left = new TreeNode(stoi(tokens[i])); pending.push(node->left); }\n        i++;\n        if (i < tokens.size() && tokens[i] != \"null\") { node->right = new TreeNode(stoi(tokens[i])); pending.push(node->right); }\n        i++;\n    }\n    return root;\n}\n\nint main() {\n    string line, token;\n    getline(cin, line);\n    istringstream in(line);\n    vector<string> tokens;\n    while (in >> token) tokens.push_back(token);\n    cout << maxDepth(buildTree(tokens)) << endl;\n    return 0;\n}\n"
+      },
+      "sampleTests": [
+        {
+          "stdin": "3 9 20 null null 15 7",
+          "expectedOutput": "3"
+        },
+        {
+          "stdin": "1 null 2",
+          "expectedOutput": "2"
+        }
+      ],
+      "hiddenTests": [
+        {
+          "stdin": "3 9 20 null null 15 7",
+          "expectedOutput": "3"
+        },
+        {
+          "stdin": "1 null 2",
+          "expectedOutput": "2"
+        },
+        {
+          "stdin": "",
+          "expectedOutput": "0"
+        },
+        {
+          "stdin": "1",
+          "expectedOutput": "1"
+        },
+        {
+          "stdin": "1 2 3 4 null null 5 6",
+          "expectedOutput": "4"
+        },
+        {
+          "stdin": "1 2 null 3 null 4 null 5",
+          "expectedOutput": "5"
+        }
+      ],
+      "timeLimitSeconds": 2.5,
+      "memoryLimitKb": 256000
+    },
+    {
+      "id": "coding-searching-binary-search",
+      "topic": "Searching",
+      "title": "Binary Search",
+      "difficulty": "Beginner",
+      "description": "Given a sorted array of distinct integers and a target, return the index of the target or -1 if it is not present.",
+      "inputFormat": "Line 1: the sorted array separated by spaces. Line 2: the target.",
+      "outputFormat": "The index of target, or -1.",
+      "constraints": [
+        "1 ≤ nums.length ≤ 10⁴",
+        "nums is sorted in ascending order.",
+        "Required time complexity: O(log n)."
+      ],
+      "examples": [
+        {
+          "input": "-1 0 3 5 9 12\n9",
+          "output": "4"
+        },
+        {
+          "input": "-1 0 3 5 9 12\n2",
+          "output": "-1"
+        }
+      ],
+      "starterCode": {
+        "JAVA": "import java.io.*;\nimport java.util.*;\n\npublic class Main {\n\n    static int search(int[] nums, int target) {\n        // Write your solution here\n        return -1;\n    }\n\n    static int[] parseInts(String line) {\n        line = line == null ? \"\" : line.trim();\n        if (line.isEmpty()) return new int[0];\n        return Arrays.stream(line.split(\"\\\\s+\")).mapToInt(Integer::parseInt).toArray();\n    }\n\n    public static void main(String[] args) throws IOException {\n        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));\n        int[] nums = parseInts(in.readLine());\n        int target = Integer.parseInt(in.readLine().trim());\n        System.out.println(search(nums, target));\n    }\n}\n",
+        "PYTHON": "import sys\n\ndef search(nums, target):\n    # Write your solution here\n    return -1\n\n\ndef main():\n    lines = sys.stdin.read().split(\"\\n\")\n    nums = [int(x) for x in lines[0].split()]\n    target = int(lines[1])\n    print(search(nums, target))\n\n\nmain()\n",
+        "JAVASCRIPT": "function search(nums, target) {\n  // Write your solution here\n  return -1;\n}\n\nconst lines = require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\").map((line) => line.replace(/\\r$/, \"\"));\nconst nums = lines[0].trim() ? lines[0].trim().split(/\\s+/).map(Number) : [];\nconsole.log(String(search(nums, Number(lines[1]))));\n",
+        "CPP": "#include <bits/stdc++.h>\nusing namespace std;\n\nint search(vector<int>& nums, int target) {\n    // Write your solution here\n    return -1;\n}\n\nvector<int> parseInts(const string& line) {\n    vector<int> values;\n    istringstream in(line);\n    int value;\n    while (in >> value) values.push_back(value);\n    return values;\n}\n\nint main() {\n    string line;\n    getline(cin, line);\n    vector<int> nums = parseInts(line);\n    int target;\n    cin >> target;\n    cout << search(nums, target) << endl;\n    return 0;\n}\n"
+      },
+      "sampleTests": [
+        {
+          "stdin": "-1 0 3 5 9 12\n9",
+          "expectedOutput": "4"
+        },
+        {
+          "stdin": "-1 0 3 5 9 12\n2",
+          "expectedOutput": "-1"
+        }
+      ],
+      "hiddenTests": [
+        {
+          "stdin": "-1 0 3 5 9 12\n9",
+          "expectedOutput": "4"
+        },
+        {
+          "stdin": "-1 0 3 5 9 12\n2",
+          "expectedOutput": "-1"
+        },
+        {
+          "stdin": "5\n5",
+          "expectedOutput": "0"
+        },
+        {
+          "stdin": "1 3 5 7 9 11 13\n1",
+          "expectedOutput": "0"
+        },
+        {
+          "stdin": "1 3 5 7 9 11 13\n13",
+          "expectedOutput": "6"
+        },
+        {
+          "stdin": "2 4 6\n7",
+          "expectedOutput": "-1"
+        }
+      ],
+      "timeLimitSeconds": 2.5,
+      "memoryLimitKb": 256000
+    },
+    {
+      "id": "coding-sorting-sort-colors",
+      "topic": "Sorting",
+      "title": "Sort Colors",
+      "difficulty": "Intermediate",
+      "description": "Given an array containing only 0s, 1s and 2s, sort it in place in a single pass without using a library sort.",
+      "inputFormat": "One line: the array elements (0, 1 or 2) separated by spaces.",
+      "outputFormat": "The sorted array separated by spaces.",
+      "constraints": [
+        "1 ≤ nums.length ≤ 300",
+        "Hint: Dutch National Flag algorithm."
+      ],
+      "examples": [
+        {
+          "input": "2 0 2 1 1 0",
+          "output": "0 0 1 1 2 2"
+        },
+        {
+          "input": "2 0 1",
+          "output": "0 1 2"
+        }
+      ],
+      "starterCode": {
+        "JAVA": "import java.io.*;\nimport java.util.*;\n\npublic class Main {\n\n    static void sortColors(int[] nums) {\n        // Write your solution here\n    }\n\n    static int[] parseInts(String line) {\n        line = line == null ? \"\" : line.trim();\n        if (line.isEmpty()) return new int[0];\n        return Arrays.stream(line.split(\"\\\\s+\")).mapToInt(Integer::parseInt).toArray();\n    }\n\n    public static void main(String[] args) throws IOException {\n        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));\n        int[] nums = parseInts(in.readLine());\n        sortColors(nums);\n        StringBuilder out = new StringBuilder();\n        for (int i = 0; i < nums.length; i++) out.append(i > 0 ? \" \" : \"\").append(nums[i]);\n        System.out.println(out);\n    }\n}\n",
+        "PYTHON": "import sys\n\ndef sort_colors(nums):\n    # Write your solution here (sort nums in place)\n    pass\n\n\ndef main():\n    lines = sys.stdin.read().split(\"\\n\")\n    nums = [int(x) for x in lines[0].split()]\n    sort_colors(nums)\n    print(\" \".join(str(x) for x in nums))\n\n\nmain()\n",
+        "JAVASCRIPT": "function sortColors(nums) {\n  // Write your solution here (sort nums in place)\n}\n\nconst lines = require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\").map((line) => line.replace(/\\r$/, \"\"));\nconst nums = lines[0].trim() ? lines[0].trim().split(/\\s+/).map(Number) : [];\nsortColors(nums);\nconsole.log(nums.join(\" \"));\n",
+        "CPP": "#include <bits/stdc++.h>\nusing namespace std;\n\nvoid sortColors(vector<int>& nums) {\n    // Write your solution here\n}\n\nvector<int> parseInts(const string& line) {\n    vector<int> values;\n    istringstream in(line);\n    int value;\n    while (in >> value) values.push_back(value);\n    return values;\n}\n\nint main() {\n    string line;\n    getline(cin, line);\n    vector<int> nums = parseInts(line);\n    sortColors(nums);\n    for (size_t i = 0; i < nums.size(); i++) cout << (i ? \" \" : \"\") << nums[i];\n    cout << endl;\n    return 0;\n}\n"
+      },
+      "sampleTests": [
+        {
+          "stdin": "2 0 2 1 1 0",
+          "expectedOutput": "0 0 1 1 2 2"
+        },
+        {
+          "stdin": "2 0 1",
+          "expectedOutput": "0 1 2"
+        }
+      ],
+      "hiddenTests": [
+        {
+          "stdin": "2 0 2 1 1 0",
+          "expectedOutput": "0 0 1 1 2 2"
+        },
+        {
+          "stdin": "2 0 1",
+          "expectedOutput": "0 1 2"
+        },
+        {
+          "stdin": "0",
+          "expectedOutput": "0"
+        },
+        {
+          "stdin": "1 1 1",
+          "expectedOutput": "1 1 1"
+        },
+        {
+          "stdin": "2 2 0 0 1 1 2 0",
+          "expectedOutput": "0 0 0 1 1 2 2 2"
+        },
+        {
+          "stdin": "2 1",
+          "expectedOutput": "1 2"
+        }
+      ],
+      "timeLimitSeconds": 2.5,
+      "memoryLimitKb": 256000
+    },
+    {
+      "id": "coding-hashing-first-unique",
+      "topic": "Hashing",
+      "title": "First Non-Repeating Character",
+      "difficulty": "Beginner",
+      "description": "Return the index of the first character in the string that does not repeat. Return -1 if every character repeats.",
+      "inputFormat": "One line: the string s (lowercase letters).",
+      "outputFormat": "The index, or -1.",
+      "constraints": [
+        "1 ≤ s.length ≤ 10⁵",
+        "s contains lowercase English letters."
+      ],
+      "examples": [
+        {
+          "input": "leetcode",
+          "output": "0",
+          "explanation": "'l' at index 0 appears only once."
+        },
+        {
+          "input": "aabb",
+          "output": "-1"
+        }
+      ],
+      "starterCode": {
+        "JAVA": "import java.io.*;\nimport java.util.*;\n\npublic class Main {\n\n    static int firstUniqChar(String s) {\n        // Write your solution here\n        return -1;\n    }\n\n    static int[] parseInts(String line) {\n        line = line == null ? \"\" : line.trim();\n        if (line.isEmpty()) return new int[0];\n        return Arrays.stream(line.split(\"\\\\s+\")).mapToInt(Integer::parseInt).toArray();\n    }\n\n    public static void main(String[] args) throws IOException {\n        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));\n        String s = in.readLine();\n        System.out.println(firstUniqChar(s == null ? \"\" : s.trim()));\n    }\n}\n",
+        "PYTHON": "import sys\n\ndef first_uniq_char(s):\n    # Write your solution here\n    return -1\n\n\ndef main():\n    lines = sys.stdin.read().split(\"\\n\")\n    print(first_uniq_char(lines[0].strip()))\n\n\nmain()\n",
+        "JAVASCRIPT": "function firstUniqChar(s) {\n  // Write your solution here\n  return -1;\n}\n\nconst lines = require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\").map((line) => line.replace(/\\r$/, \"\"));\nconsole.log(String(firstUniqChar(lines[0].trim())));\n",
+        "CPP": "#include <bits/stdc++.h>\nusing namespace std;\n\nint firstUniqChar(string s) {\n    // Write your solution here\n    return -1;\n}\n\nint main() {\n    string s;\n    getline(cin, s);\n    if (!s.empty() && s.back() == '\\r') s.pop_back();\n    cout << firstUniqChar(s) << endl;\n    return 0;\n}\n"
+      },
+      "sampleTests": [
+        {
+          "stdin": "leetcode",
+          "expectedOutput": "0"
+        },
+        {
+          "stdin": "aabb",
+          "expectedOutput": "-1"
+        }
+      ],
+      "hiddenTests": [
+        {
+          "stdin": "leetcode",
+          "expectedOutput": "0"
+        },
+        {
+          "stdin": "loveleetcode",
+          "expectedOutput": "2"
+        },
+        {
+          "stdin": "aabb",
+          "expectedOutput": "-1"
+        },
+        {
+          "stdin": "z",
+          "expectedOutput": "0"
+        },
+        {
+          "stdin": "aabbcdc",
+          "expectedOutput": "5"
+        },
+        {
+          "stdin": "abcabcd",
+          "expectedOutput": "6"
+        }
+      ],
+      "timeLimitSeconds": 2.5,
+      "memoryLimitKb": 256000
+    },
+    {
+      "id": "coding-dp-climbing-stairs",
+      "topic": "Dynamic Programming",
+      "title": "Climbing Stairs",
+      "difficulty": "Beginner",
+      "description": "You can climb 1 or 2 steps at a time. Return the number of distinct ways to reach the top of a staircase with n steps.",
+      "inputFormat": "One line: the integer n.",
+      "outputFormat": "The number of distinct ways.",
+      "constraints": [
+        "1 ≤ n ≤ 45",
+        "Aim for O(n) time and O(1) space."
+      ],
+      "examples": [
+        {
+          "input": "2",
+          "output": "2",
+          "explanation": "1+1 or 2"
+        },
+        {
+          "input": "3",
+          "output": "3",
+          "explanation": "1+1+1, 1+2 or 2+1"
+        }
+      ],
+      "starterCode": {
+        "JAVA": "import java.io.*;\nimport java.util.*;\n\npublic class Main {\n\n    static int climbStairs(int n) {\n        // Write your solution here\n        return 0;\n    }\n\n    static int[] parseInts(String line) {\n        line = line == null ? \"\" : line.trim();\n        if (line.isEmpty()) return new int[0];\n        return Arrays.stream(line.split(\"\\\\s+\")).mapToInt(Integer::parseInt).toArray();\n    }\n\n    public static void main(String[] args) throws IOException {\n        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));\n        int n = Integer.parseInt(in.readLine().trim());\n        System.out.println(climbStairs(n));\n    }\n}\n",
+        "PYTHON": "import sys\n\ndef climb_stairs(n):\n    # Write your solution here\n    return 0\n\n\ndef main():\n    lines = sys.stdin.read().split(\"\\n\")\n    print(climb_stairs(int(lines[0])))\n\n\nmain()\n",
+        "JAVASCRIPT": "function climbStairs(n) {\n  // Write your solution here\n  return 0;\n}\n\nconst lines = require(\"fs\").readFileSync(0, \"utf8\").split(\"\\n\").map((line) => line.replace(/\\r$/, \"\"));\nconsole.log(String(climbStairs(Number(lines[0]))));\n",
+        "CPP": "#include <bits/stdc++.h>\nusing namespace std;\n\nint climbStairs(int n) {\n    // Write your solution here\n    return 0;\n}\n\nint main() {\n    int n;\n    cin >> n;\n    cout << climbStairs(n) << endl;\n    return 0;\n}\n"
+      },
+      "sampleTests": [
+        {
+          "stdin": "2",
+          "expectedOutput": "2"
+        },
+        {
+          "stdin": "3",
+          "expectedOutput": "3"
+        }
+      ],
+      "hiddenTests": [
+        {
+          "stdin": "1",
+          "expectedOutput": "1"
+        },
+        {
+          "stdin": "2",
+          "expectedOutput": "2"
+        },
+        {
+          "stdin": "3",
+          "expectedOutput": "3"
+        },
+        {
+          "stdin": "5",
+          "expectedOutput": "8"
+        },
+        {
+          "stdin": "10",
+          "expectedOutput": "89"
+        },
+        {
+          "stdin": "45",
+          "expectedOutput": "1836311903"
+        }
+      ],
+      "timeLimitSeconds": 2.5,
+      "memoryLimitKb": 256000
+    }
+  ]
+}

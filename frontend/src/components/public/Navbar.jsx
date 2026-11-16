@@ -1,0 +1,91 @@
+import { useState } from "react";
+import { Link, NavLink } from "react-router-dom";
+import { FiMenu, FiX, FiChevronDown } from "react-icons/fi";
+
+function Navbar() {
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const closeMenu = () => {
+    setMenuOpen(false);
+  };
+
+  return (
+    <header className="public-navbar">
+      <div className="navbar-container">
+
+        <Link to="/" className="brand" onClick={closeMenu}>
+          <div className="brand-icon">C</div>
+
+          <div className="brand-text">
+            Career<span>AI</span>
+          </div>
+        </Link>
+
+        <nav className={`navbar-links ${menuOpen ? "active" : ""}`}>
+
+          <NavLink to="/" onClick={closeMenu}>
+            Home
+          </NavLink>
+
+          <NavLink to="/features" onClick={closeMenu}>
+            Features
+          </NavLink>
+
+          <NavLink to="/how-it-works" onClick={closeMenu}>
+            How It Works
+          </NavLink>
+
+          <NavLink to="/ai-interview" onClick={closeMenu}>
+            AI Interview
+          </NavLink>
+
+          <NavLink to="/resume-tools" onClick={closeMenu}>
+            Resume Tools
+          </NavLink>
+
+          <div className="nav-dropdown">
+            <span>
+              Explore <FiChevronDown />
+            </span>
+
+            <div className="dropdown-menu">
+              <Link to="/practice" onClick={closeMenu}>
+                Practice
+              </Link>
+
+              <Link to="/career-tracks" onClick={closeMenu}>
+                Career Tracks
+              </Link>
+
+              <Link to="/resources" onClick={closeMenu}>
+                Resources
+              </Link>
+            </div>
+          </div>
+
+        </nav>
+
+        <div className="navbar-actions">
+          <Link to="/login" className="login-link">
+            Log in
+          </Link>
+
+          <Link to="/register" className="nav-primary-button">
+            Get Started
+          </Link>
+        </div>
+
+        <button
+          className="mobile-menu-button"
+          onClick={() => setMenuOpen(!menuOpen)}
+          aria-label="Toggle navigation"
+        >
+          {menuOpen ? <FiX /> : <FiMenu />}
+        </button>
+
+      </div>
+    </header>
+  );
+}
+
+export default Navbar;

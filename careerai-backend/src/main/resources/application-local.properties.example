@@ -1,0 +1,6 @@
+# =====================================================================================
+# LOCAL DEVELOPMENT ONLY - copy to application-local.properties (git-ignored) and fill in.
+# application.properties imports it optionally, so the app also runs without it.
+# Environment variables always win: DB_PASSWORD overrides careerai.local.db-password.
+# =====================================================================================
+careerai.local.db-password=your-local-mysql-password
