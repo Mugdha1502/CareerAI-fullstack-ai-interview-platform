@@ -1,4 +1,9 @@
 # CareerAI
+## Author
+
+Developed by **Mugdha Manoj Kamble**
+
+GitHub: https://github.com/Mugdha1502
 
 **Full-Stack AI-Powered Career Preparation and Real-Time Interview Platform**
 
