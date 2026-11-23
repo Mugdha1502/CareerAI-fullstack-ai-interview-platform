@@ -35,6 +35,7 @@ import {
 } from "../../context/AuthContext";
 
 import PlanBadge from "../../components/common/PlanBadge";
+import { useSubscription } from "../../context/subscription";
 
 import PlanUsageCard from "../../components/billing/PlanUsageCard";
 
@@ -62,6 +63,8 @@ function Dashboard() {
     user,
     isGuest
   } = useAuth();
+
+  const { displayPlan } = useSubscription();
 
 
   // Visiting the dashboard counts as today's activity (idempotent per day).
@@ -187,9 +190,7 @@ function Dashboard() {
         <div className="dashboard-welcome-actions">
 
           <PlanBadge
-            plan={
-              user?.plan
-            }
+            plan={displayPlan}
           />
 
           <Link

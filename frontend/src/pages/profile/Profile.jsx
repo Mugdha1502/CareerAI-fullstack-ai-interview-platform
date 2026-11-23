@@ -22,6 +22,7 @@ import {
 
 import { useAuth } from "../../context/AuthContext";
 import PlanBadge from "../../components/common/PlanBadge";
+import { useSubscription } from "../../context/subscription";
 import { toApiError } from "../../services/api";
 import { getProfile, splitSkills } from "../../services/profileService";
 import {
@@ -97,6 +98,7 @@ function mapFieldErrors(fieldErrors) {
 
 function Profile() {
   const { user, isGuest, saveProfile } = useAuth();
+  const { displayPlan } = useSubscription();
 
   // Registered users load from GET /api/profile/me; guests use their local session.
   const [loading, setLoading] = useState(!isGuest);
@@ -362,7 +364,7 @@ function Profile() {
                 <div className="ua-field">
                   <span className="ua-field-label">Plan</span>
                   <div className="profile-plan">
-                    <PlanBadge plan={user?.plan} />
+                    <PlanBadge plan={displayPlan} />
                     <Link to="/pricing" className="ua-card-link">View plans</Link>
                   </div>
                 </div>

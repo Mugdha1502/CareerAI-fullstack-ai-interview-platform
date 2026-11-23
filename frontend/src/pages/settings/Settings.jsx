@@ -17,6 +17,7 @@ import {
 
 import { useAuth } from "../../context/AuthContext";
 import PlanBadge from "../../components/common/PlanBadge";
+import { useSubscription } from "../../context/subscription";
 import {
   DEFAULT_SETTINGS,
   DIFFICULTIES,
@@ -45,6 +46,7 @@ const sameSettings = (a, b) => Object.keys(DEFAULT_SETTINGS).every((key) => a[ke
 
 function Settings() {
   const { user } = useAuth();
+  const { displayPlan } = useSubscription();
 
   const [saved, setSaved] = useState(() => getSettings(user?.id));
   const [draft, setDraft] = useState(saved);
@@ -132,7 +134,7 @@ function Settings() {
             </div>
             <div>
               <dt>Plan</dt>
-              <dd><PlanBadge plan={user?.plan} /></dd>
+              <dd><PlanBadge plan={displayPlan} /></dd>
             </div>
           </dl>
 

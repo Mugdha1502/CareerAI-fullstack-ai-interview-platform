@@ -9,7 +9,7 @@ const SUMMARY_FEATURES = ["AI_VOICE_INTERVIEW", "AI_TEXT_INTERVIEW", "CODING_RUN
 
 /** Dashboard card: current plan, a few usage meters and Upgrade / View Plan. */
 function PlanUsageCard() {
-  const { subscription, isPro, loading } = useSubscription();
+  const { subscription, isPro, displayPlan, loading } = useSubscription();
 
   return (
     <section className="dashboard-card usage-dashboard-card">
@@ -18,7 +18,7 @@ function PlanUsageCard() {
           <span>PLAN & USAGE</span>
           <h2>{isPro ? "PRO PLAN" : "FREE PLAN"}</h2>
         </div>
-        <PlanBadge plan={isPro ? "PRO" : "FREE"} />
+        <PlanBadge plan={displayPlan} />
       </div>
 
       {isPro && subscription?.expiresAt && (

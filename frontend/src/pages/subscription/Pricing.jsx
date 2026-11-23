@@ -15,6 +15,9 @@ import { toApiError } from "../../services/api";
    verified the payment. PRO is a paid access period (no automatic renewal).
 ===================================================== */
 
+/** A PENDING payment is normally confirmed by Razorpay's webhook shortly after: re-check a few times. */
+const PENDING_RECHECK_MS = [10_000, 30_000, 60_000];
+
 const FEATURE_ORDER = [
   "AI_TEXT_INTERVIEW", "AI_VOICE_INTERVIEW", "AI_COACH_MESSAGE",
   "RESUME_ATS_ANALYSIS", "RESUME_JOB_MATCH", "RESUME_AI_IMPROVEMENT", "RESUME_INTERVIEW_PREP",
@@ -41,11 +44,18 @@ function featureLines(plan) {
 
 function Pricing() {
   const { isRegistered, isGuest } = useAuth();
-  const { subscription, isPro, refresh } = useSubscription();
+  const { subscription, isPro, displayPlan, refresh } = useSubscription();
   const [catalog, setCatalog] = useState(null);
   const [loadError, setLoadError] = useState("");
   const [cycle, setCycle] = useState("MONTHLY");
   const [checkout, setCheckout] = useState({ state: "idle", message: "" }); // idle | working | verifying | success | pending | info | error
+
+  const pending = checkout.state === "pending";
+  useEffect(() => {
+    if (!pending || isPro) return undefined;
+    const timers = PENDING_RECHECK_MS.map((delay) => setTimeout(() => refresh(), delay));
+    return () => timers.forEach(clearTimeout);
+  }, [pending, isPro, refresh]);
 
   useEffect(() => {
     let cancelled = false;
@@ -83,7 +93,9 @@ function Pricing() {
     }
   };
 
-  const busy = checkout.state === "working" || checkout.state === "verifying";
+  // Once the backend reports PRO, a pending payment has been confirmed.
+  const status = pending && isPro ? { state: "success", message: `PRO access until ${formatDate(subscription?.expiresAt)}` } : checkout;
+  const busy = status.state === "working" || status.state === "verifying";
 
   const proAction = () => {
     if (isGuest || !isRegistered) {
@@ -119,24 +131,24 @@ function Pricing() {
         </div>
         <div className="pricing-current">
           <span>Current Plan</span>
-          <PlanBadge plan={isPro ? "PRO" : "FREE"} />
+          <PlanBadge plan={displayPlan} />
           {isPro && subscription?.expiresAt && <small>PRO access until {formatDate(subscription.expiresAt)}</small>}
         </div>
       </header>
 
-      {checkout.state === "success" && (
+      {status.state === "success" && (
         <div className="pricing-status success" role="status">
           <FiCheckCircle aria-hidden="true" />
           <div>
             <strong>Payment successful — CareerAI PRO activated</strong>
-            <p>{checkout.message}</p>
+            <p>{status.message}</p>
           </div>
         </div>
       )}
-      {["pending", "info", "error", "verifying", "working"].includes(checkout.state) && (
-        <div className={`pricing-status ${checkout.state === "error" ? "error" : "info"}`} role={checkout.state === "error" ? "alert" : "status"}>
-          {checkout.state === "error" ? <FiAlertCircle aria-hidden="true" /> : busy ? <FiLoader className="resume-spin" aria-hidden="true" /> : <FiInfo aria-hidden="true" />}
-          <p>{checkout.message}</p>
+      {["pending", "info", "error", "verifying", "working"].includes(status.state) && (
+        <div className={`pricing-status ${status.state === "error" ? "error" : "info"}`} role={status.state === "error" ? "alert" : "status"}>
+          {status.state === "error" ? <FiAlertCircle aria-hidden="true" /> : busy ? <FiLoader className="resume-spin" aria-hidden="true" /> : <FiInfo aria-hidden="true" />}
+          <p>{status.message}</p>
         </div>
       )}
       {loadError && (

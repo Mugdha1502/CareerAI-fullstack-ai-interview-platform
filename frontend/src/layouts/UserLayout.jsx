@@ -67,15 +67,9 @@ function UserLayout() {
   // Plan shown in the shell comes from the verified backend subscription (never from a checkout callback).
   const {
     subscription,
-    isPro
+    isPro,
+    displayPlan
   } = useSubscription();
-
-  const displayPlan =
-    !isRegistered
-      ? user?.plan || "GUEST"
-      : isPro
-        ? "PRO"
-        : "FREE";
 
 
   const [sidebarOpen,

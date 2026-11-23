@@ -21,7 +21,7 @@ const STATUS_LABELS = {
 };
 
 function Billing() {
-  const { subscription, isPro, loading, error } = useSubscription();
+  const { subscription, isPro, displayPlan, loading, error } = useSubscription();
   const [history, setHistory] = useState(null);
   const [historyError, setHistoryError] = useState("");
 
@@ -51,7 +51,7 @@ function Billing() {
       <section className="ua-card billing-current">
         <div className="billing-current-main">
           <span className="ua-card-kicker">CURRENT PLAN</span>
-          <h2><PlanBadge plan={isPro ? "PRO" : "FREE"} /> {isPro ? "CareerAI PRO" : "CareerAI Free"}</h2>
+          <h2><PlanBadge plan={displayPlan} /> {isPro ? "CareerAI PRO" : "CareerAI Free"}</h2>
           <p>
             {isPro && subscription?.expiresAt
               ? `PRO access until ${formatDate(subscription.expiresAt)}`
