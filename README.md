@@ -5,7 +5,8 @@ Developed by **Mugdha Manoj Kamble**
 
 GitHub: https://github.com/Mugdha1502
 
-**Full-Stack AI-Powered Career Preparation and Real-Time Interview Platform**
+
+#**Full-Stack AI-Powered Career Preparation and Real-Time Interview Platform**
 
 CareerAI is a web application where students and freshers can practise coding, SQL and aptitude, take AI mock interviews (text and voice), work on their resume, and track their preparation in one place. It has a React frontend and a Spring Boot + MySQL backend.
 
