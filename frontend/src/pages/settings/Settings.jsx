@@ -15,7 +15,7 @@ import {
   FiLock
 } from "react-icons/fi";
 
-import { useAuth } from "../../context/AuthContext";
+import { useAuth } from "../../context/auth";
 import PlanBadge from "../../components/common/PlanBadge";
 import { useSubscription } from "../../context/subscription";
 import {

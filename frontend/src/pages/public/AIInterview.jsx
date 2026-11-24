@@ -16,8 +16,7 @@ import {
   FiCpu,
   FiActivity,
   FiClock,
-  FiUser,
-  FiZap
+  FiUser
 } from "react-icons/fi";
 
 function AIInterview() {

@@ -17,7 +17,7 @@ import {
   FiSettings
 } from "react-icons/fi";
 import { XP_REWARDS } from "../../services/xpService";
-import { useAuth } from "../../context/AuthContext";
+import { useAuth } from "../../context/auth";
 import { getSettings } from "../../services/settingsService";
 import {
   canSavePractice,

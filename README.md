@@ -381,6 +381,8 @@ Give the backend your MySQL password in **one** of these ways:
 - set the `DB_PASSWORD` environment variable, or
 - copy `careerai-backend/src/main/resources/application-local.properties.example` to `application-local.properties` in the same folder and fill in the password (this file is git-ignored).
 
+The backend also needs a JWT signing secret: set `JWT_SECRET`, or put your own random value in `careerai.local.jwt-secret` in the same `application-local.properties` file. There is no built-in default.
+
 ### 3. Start the backend
 
 **Option A — terminal (PowerShell):**
@@ -431,10 +433,15 @@ Templates: [`careerai-backend/.env.example`](careerai-backend/.env.example) and 
 | `DB_URL` | JDBC URL (default: local `careerai` database) | Optional locally |
 | `DB_USERNAME` | MySQL user (default `root`) | Optional locally |
 | `DB_PASSWORD` | MySQL password | Required |
-| `JWT_SECRET` | Secret for signing JWTs (32+ characters). The built-in value is only for local development | Required for any deployment |
+| `JWT_SECRET` | Secret for signing JWTs (32+ random characters). There is no built-in value; locally it can live in `application-local.properties` | Required |
 | `JWT_EXPIRATION` | Token lifetime in ms (default 24 hours) | Optional |
 | `CORS_ALLOWED_ORIGINS` | Allowed frontend origins (default `http://localhost:5173`) | Optional locally |
-| `RESUME_STORAGE_DIR` | Folder for uploaded resumes (default `uploads/resumes`) | Optional |
+| `RESUME_STORAGE_PROVIDER` | `local` (folder) or `database` (stored in MySQL) | Optional |
+| `RESUME_STORAGE_DIR` | Folder for uploaded resumes when using `local` (default `uploads/resumes`) | Optional |
+| `TRUSTED_PROXIES` | Reverse-proxy IPs/CIDRs whose `X-Forwarded-For` header is trusted | Optional (set when behind a proxy) |
+| `LOGIN_MAX_FAILURES_PER_ACCOUNT`, `LOGIN_MAX_FAILURES_PER_IP`, `LOGIN_FAILURE_WINDOW` | Login rate-limit policy (defaults 5, 30, 15 minutes) | Optional |
+| `SPRING_PROFILES_ACTIVE` | `prod` for a deployed backend (Flyway migrations, schema validation, no local defaults) | Required when deployed |
+| `FLYWAY_BASELINE_ON_MIGRATE` | `true` for one start to adopt an existing pre-Flyway database (see `docs/deployment-backend.md`) | Optional |
 | `GEMINI_API_KEY` | Gemini AI features | Optional |
 | `GEMINI_MODEL` | Override the Gemini model | Optional |
 | `SIMLI_API_KEY` | Simli avatar | Optional |
@@ -517,7 +524,7 @@ The project is **under development**. It runs locally and has not been deployed 
 - Live Razorpay payments are **not** enabled; only Test Mode has been used.
 - The Simli avatar depends on the Simli service and account; when a session cannot be created, the voice interview continues without the avatar.
 - Voice interviews need a configured Vapi assistant and microphone access.
-- Database tables are created by Hibernate (`ddl-auto=update`); there are no migration scripts yet.
+- Deployed databases use Flyway migration scripts with schema validation; local development still lets Hibernate (`ddl-auto=update`) manage tables. See `docs/deployment-backend.md`.
 - Uploaded resumes are stored on the local disk.
 - Some features (application tracker, achievements/XP) store data only in the browser.
 - The Resume Builder's PDF export button is not connected yet.
@@ -530,7 +537,7 @@ The project is **under development**. It runs locally and has not been deployed 
 - Improve the reliability of real-time AI interview sessions (Vapi and Simli)
 - Add more frontend automated tests and complete end-to-end tests
 - Improve responsive layouts on smaller screens
-- Add database migrations (Flyway) and cloud storage for resumes
+- Cloud object storage for resumes (currently local disk or the database)
 - Deploy the complete application (frontend, backend and managed MySQL)
 - Improve production monitoring and error handling
 - Add more coding and SQL questions

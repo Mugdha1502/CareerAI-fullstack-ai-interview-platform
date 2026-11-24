@@ -11,6 +11,7 @@ import com.careerai.backend.practice.PracticeExecutionException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
@@ -49,6 +50,17 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(InvalidCredentialsException.class)
     public ResponseEntity<Map<String, Object>> handleInvalidCredentials(InvalidCredentialsException ex) {
         return body(HttpStatus.UNAUTHORIZED, ex.getMessage());
+    }
+
+    /** Same body for every account (no enumeration); Retry-After tells clients when to try again. */
+    @ExceptionHandler(LoginRateLimitedException.class)
+    public ResponseEntity<Map<String, Object>> handleLoginRateLimited(LoginRateLimitedException ex) {
+        Map<String, Object> response = new LinkedHashMap<>();
+        response.put("message", ex.getMessage());
+        response.put("code", "LOGIN_RATE_LIMITED");
+        return ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS)
+            .header(HttpHeaders.RETRY_AFTER, String.valueOf(ex.retryAfterSeconds()))
+            .body(response);
     }
 
     @ExceptionHandler(UserNotFoundException.class)

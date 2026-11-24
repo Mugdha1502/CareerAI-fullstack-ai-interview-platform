@@ -1,10 +1,10 @@
 import {
-  createContext,
   useCallback,
-  useContext,
   useEffect,
   useState
 } from "react";
+
+import { AuthContext } from "./auth";
 
 import {
   authService
@@ -20,10 +20,6 @@ import {
   completeOnboarding as saveOnboarding,
   updateProfile
 } from "../services/profileService";
-
-
-const AuthContext =
-  createContext(null);
 
 
 const SESSION_EXPIRED_MESSAGE =
@@ -329,25 +325,4 @@ export function AuthProvider({
 
     </AuthContext.Provider>
   );
-}
-
-
-export function useAuth() {
-
-  const context =
-    useContext(
-      AuthContext
-    );
-
-
-  if (!context) {
-
-    throw new Error(
-      "useAuth must be used inside AuthProvider."
-    );
-
-  }
-
-
-  return context;
 }

@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { useAuth } from "./AuthContext";
+import { useAuth } from "./auth";
 import { CLOCK_SKEW_RETRY_MS, FOCUS_REFRESH_MS, MAX_EXPIRY_TIMER_MS, SubscriptionContext } from "./subscription";
 import { PLAN_LIMIT_EVENT, getSubscription } from "../services/billingService";
 import { toApiError } from "../services/api";

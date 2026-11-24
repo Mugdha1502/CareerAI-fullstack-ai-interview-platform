@@ -11,7 +11,7 @@ import { getSubscription } from "../services/billingService";
 
 const auth = { user: null, isRegistered: false };
 
-vi.mock("./AuthContext", () => ({ useAuth: () => auth }));
+vi.mock("./auth", () => ({ useAuth: () => auth }));
 vi.mock("../services/billingService", async (importOriginal) => ({
   ...(await importOriginal()),
   getSubscription: vi.fn()

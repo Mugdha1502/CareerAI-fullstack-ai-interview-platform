@@ -330,6 +330,10 @@ button {
 
 }
 
+.navbar-mobile-actions {
+  display: none;
+}
+
 .mobile-menu-button {
 
   display: none;
@@ -1747,6 +1751,22 @@ button {
   .mobile-menu-button {
 
     display: block;
+
+  }
+
+  .navbar-links.active .navbar-mobile-actions {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 16px;
+
+    width: 100%;
+
+    padding-top: 16px;
+
+    border-top: 1px solid var(--border);
 
   }
 

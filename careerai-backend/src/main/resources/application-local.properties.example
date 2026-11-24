@@ -1,6 +1,9 @@
 # =====================================================================================
 # LOCAL DEVELOPMENT ONLY - copy to application-local.properties (git-ignored) and fill in.
 # application.properties imports it optionally, so the app also runs without it.
-# Environment variables always win: DB_PASSWORD overrides careerai.local.db-password.
+# Environment variables always win: DB_PASSWORD and JWT_SECRET override these values.
 # =====================================================================================
 careerai.local.db-password=your-local-mysql-password
+# Generate your own random value (PowerShell):
+#   $b = New-Object byte[] 48; [Security.Cryptography.RandomNumberGenerator]::Create().GetBytes($b); [Convert]::ToBase64String($b)
+careerai.local.jwt-secret=replace-with-your-own-long-random-local-secret

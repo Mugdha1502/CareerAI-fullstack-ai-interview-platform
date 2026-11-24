@@ -20,7 +20,7 @@ import {
 
 import {
   useAuth
-} from "../../context/AuthContext";
+} from "../../context/auth";
 
 import {
   toApiError

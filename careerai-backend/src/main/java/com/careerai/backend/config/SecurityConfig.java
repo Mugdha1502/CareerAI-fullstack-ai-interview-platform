@@ -26,7 +26,7 @@ import java.util.List;
 @Configuration
 public class SecurityConfig {
 
-    /** Comma-separated list; defaults to the Vite dev server. */
+    /** CORS_ALLOWED_ORIGINS: comma-separated exact origins; defaults to the Vite dev server. Validated by CorsOrigins. */
     @Value("${careerai.cors.allowed-origins:http://localhost:5173}")
     private List<String> allowedOrigins;
 
@@ -59,6 +59,8 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.POST, "/api/auth/register", "/api/auth/login").permitAll()
                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .requestMatchers("/error").permitAll()
+                // Load balancer / platform health probe: status only, no details.
+                .requestMatchers(HttpMethod.GET, "/actuator/health").permitAll()
                 // Public plan catalogue; the Razorpay webhook authenticates by HMAC signature, not JWT.
                 .requestMatchers(HttpMethod.GET, "/api/billing/plans").permitAll()
                 .requestMatchers(HttpMethod.POST, "/api/billing/razorpay/webhook").permitAll()
@@ -77,7 +79,8 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(allowedOrigins);
+        config.setAllowedOrigins(CorsOrigins.parse(allowedOrigins));
+        config.setAllowCredentials(false); // JWT travels in the Authorization header, not in cookies
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(List.of("Authorization", "Content-Type"));
         config.setMaxAge(3600L);

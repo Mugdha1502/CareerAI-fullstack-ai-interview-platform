@@ -18,7 +18,7 @@ import {
   startInterview,
   submitAnswer
 } from "../../services/interviewService";
-import { useAuth } from "../../context/AuthContext";
+import { useAuth } from "../../context/auth";
 
 const TYPE_LABELS = {
   TECHNICAL: "Technical",

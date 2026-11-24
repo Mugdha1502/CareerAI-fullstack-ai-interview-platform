@@ -14,7 +14,7 @@ import {
   FiAlertCircle
 } from "react-icons/fi";
 
-import { useAuth } from "../../context/AuthContext";
+import { useAuth } from "../../context/auth";
 import { toApiError } from "../../services/api";
 import {
   createConversation,

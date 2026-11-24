@@ -1,0 +1,2 @@
+# Netlify: serve the React app for every route that is not a real file (React Router handles the URL).
+/*    /index.html   200

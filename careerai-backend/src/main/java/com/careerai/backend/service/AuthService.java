@@ -10,13 +10,16 @@ import com.careerai.backend.exception.InvalidCredentialsException;
 import com.careerai.backend.exception.PasswordMismatchException;
 import com.careerai.backend.exception.UserNotFoundException;
 import com.careerai.backend.repository.UserRepository;
+import com.careerai.backend.security.ClientIpResolver.ClientAddress;
 import com.careerai.backend.security.JwtService;
+import com.careerai.backend.security.LoginRateLimiter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Locale;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -25,6 +28,10 @@ public class AuthService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
+    private final LoginRateLimiter loginRateLimiter;
+
+    /** Hash checked for unknown emails so both cases take the same BCrypt time (no timing hint). */
+    private volatile String timingEqualizerHash;
 
     @Transactional
     public AuthResponse register(RegisterRequest request) {
@@ -50,16 +57,40 @@ public class AuthService {
         return AuthResponse.from(saved, jwtService.generateToken(saved), "Registration successful");
     }
 
+    /**
+     * Throttled per account + client IP and per IP (LoginRateLimiter). Unknown emails and wrong
+     * passwords get the same 401, take the same BCrypt time and count towards the same limits.
+     */
     @Transactional(readOnly = true)
-    public AuthResponse login(LoginRequest request) {
-        User user = userRepository.findByEmail(normalizeEmail(request.getEmail()))
-            .orElseThrow(InvalidCredentialsException::new);
+    public AuthResponse login(LoginRequest request, ClientAddress client) {
+        String email = normalizeEmail(request.getEmail());
+        loginRateLimiter.checkAllowed(email, client);
 
-        if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
+        User user = userRepository.findByEmail(email).orElse(null);
+        boolean valid;
+        if (user == null) {
+            passwordEncoder.matches(request.getPassword(), timingEqualizerHash()); // result ignored: timing only
+            valid = false;
+        } else {
+            valid = passwordEncoder.matches(request.getPassword(), user.getPassword());
+        }
+
+        if (!valid) {
+            loginRateLimiter.recordFailure(email, client);
             throw new InvalidCredentialsException();
         }
 
+        loginRateLimiter.recordSuccess(email, client);
         return AuthResponse.from(user, jwtService.generateToken(user), "Login successful");
+    }
+
+    private String timingEqualizerHash() {
+        String hash = timingEqualizerHash;
+        if (hash == null) {
+            hash = passwordEncoder.encode("careerai-timing-equalizer-" + UUID.randomUUID());
+            timingEqualizerHash = hash;
+        }
+        return hash;
     }
 
     /**

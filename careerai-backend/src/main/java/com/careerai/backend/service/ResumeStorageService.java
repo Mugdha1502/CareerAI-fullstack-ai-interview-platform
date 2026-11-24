@@ -3,32 +3,26 @@ package com.careerai.backend.service;
 import com.careerai.backend.exception.InvalidResumeFileException;
 import com.careerai.backend.exception.ResumeFileTooLargeException;
 import com.careerai.backend.exception.ResumeNotFoundException;
+import com.careerai.backend.storage.ResumeFileStore;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.io.UncheckedIOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
 import java.util.Arrays;
 import java.util.Locale;
 import java.util.Set;
 import java.util.UUID;
+import java.util.regex.Pattern;
 
 /**
- * Stores uploaded resume files on local disk (development storage) under
- * app.storage.resume-dir, one folder per user, with random file names.
+ * Validates uploaded resume files and keeps them in the configured ResumeFileStore
+ * (local disk or the application database), one folder per user, with random file names.
  * Files are never executed and never served as static content; the only way to read
  * one back is the authenticated download endpoint, which checks ownership first.
- *
- * TODO (production): swap the disk calls for object storage behind this same API.
  */
 @Service
 public class ResumeStorageService {
@@ -48,14 +42,17 @@ public class ResumeStorageService {
     public record StoredFile(String storedFileName, String storagePath) {
     }
 
-    private final Path root;
+    /** The only shape a storage path can have: "{userId}/{32 hex}.{pdf|doc|docx}" (no "..", no slashes beyond one). */
+    private static final Pattern STORAGE_PATH = Pattern.compile("^[0-9]{1,19}/[0-9a-f]{32}\\.(pdf|doc|docx)$");
+
+    private final ResumeFileStore store;
     private final long maxBytes;
 
     public ResumeStorageService(
-        @Value("${app.storage.resume-dir:uploads/resumes}") String resumeDir,
+        ResumeFileStore store,
         @Value("${app.storage.resume-max-bytes:5242880}") long maxBytes
     ) {
-        this.root = Paths.get(resumeDir).toAbsolutePath().normalize();
+        this.store = store;
         this.maxBytes = maxBytes;
     }
 
@@ -112,43 +109,40 @@ public class ResumeStorageService {
     public StoredFile store(Long userId, ValidatedUpload upload) {
         String storedName = UUID.randomUUID().toString().replace("-", "") + "." + upload.type().extension();
         String storagePath = userId + "/" + storedName;
-        Path target = resolve(storagePath);
-
-        try {
-            Files.createDirectories(target.getParent());
-            Files.write(target, upload.bytes(), StandardOpenOption.CREATE_NEW, StandardOpenOption.WRITE);
-        } catch (IOException ex) {
-            throw new UncheckedIOException("Could not store resume file", ex);
-        }
-
+        store.write(requireValidPath(storagePath), upload.bytes());
         return new StoredFile(storedName, storagePath);
     }
 
     public Resource load(String storagePath) {
-        Path path = resolve(storagePath);
-        if (!Files.isRegularFile(path)) {
+        if (storagePath == null || !STORAGE_PATH.matcher(storagePath).matches()) {
             throw new ResumeNotFoundException("Resume file not found");
         }
-        return new FileSystemResource(path);
+        return store.read(storagePath);
     }
 
     /** Best effort: a missing file is not an error; failures are logged without the full path. */
     public void delete(String storagePath) {
         if (storagePath == null || storagePath.isBlank()) return;
+        if (!STORAGE_PATH.matcher(storagePath).matches()) {
+            log.warn("Refused to delete a resume file with an invalid storage path.");
+            return;
+        }
         try {
-            Files.deleteIfExists(resolve(storagePath));
-        } catch (IOException | RuntimeException ex) {
-            log.warn("Could not delete stored resume file {}: {}", storagePath, ex.getMessage());
+            store.delete(storagePath);
+        } catch (RuntimeException ex) {
+            log.warn("Could not delete stored resume file {}: {}", storagePath, ex.getClass().getSimpleName());
         }
     }
 
-    /** Resolves a stored relative path and refuses anything that escapes the storage root. */
-    private Path resolve(String storagePath) {
-        Path path = root.resolve(storagePath).normalize();
-        if (!path.startsWith(root) || path.equals(root)) {
+    public static boolean isValidStoragePath(String storagePath) {
+        return storagePath != null && STORAGE_PATH.matcher(storagePath).matches();
+    }
+
+    private static String requireValidPath(String storagePath) {
+        if (!isValidStoragePath(storagePath)) {
             throw new IllegalArgumentException("Invalid storage path");
         }
-        return path;
+        return storagePath;
     }
 
     /**

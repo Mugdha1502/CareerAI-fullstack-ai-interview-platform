@@ -10,7 +10,7 @@ import { startProCheckout } from "../../services/razorpayService";
 
 const auth = { user: { id: 7, plan: "FREE", accountType: "REGISTERED" }, isRegistered: true, isGuest: false };
 
-vi.mock("../../context/AuthContext", () => ({ useAuth: () => auth }));
+vi.mock("../../context/auth", () => ({ useAuth: () => auth }));
 vi.mock("../../services/billingService", async (importOriginal) => ({
   ...(await importOriginal()),
   getSubscription: vi.fn(),

@@ -1,13 +1,32 @@
 import { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { FiMenu, FiX, FiChevronDown } from "react-icons/fi";
+import { useAuth } from "../../context/auth";
 
 function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const { isRegistered } = useAuth();
 
   const closeMenu = () => {
     setMenuOpen(false);
   };
+
+  // Signed-in users go back to their dashboard; everyone else can log in or register.
+  const accountLinks = isRegistered ? (
+    <Link to="/dashboard" className="nav-primary-button" onClick={closeMenu}>
+      Dashboard
+    </Link>
+  ) : (
+    <>
+      <Link to="/login" className="login-link" onClick={closeMenu}>
+        Log in
+      </Link>
+
+      <Link to="/register" className="nav-primary-button" onClick={closeMenu}>
+        Get Started
+      </Link>
+    </>
+  );
 
   return (
     <header className="public-navbar">
@@ -63,16 +82,15 @@ function Navbar() {
             </div>
           </div>
 
+          {/* The desktop actions are hidden on small screens, so the open menu repeats them. */}
+          <div className="navbar-mobile-actions">
+            {accountLinks}
+          </div>
+
         </nav>
 
         <div className="navbar-actions">
-          <Link to="/login" className="login-link">
-            Log in
-          </Link>
-
-          <Link to="/register" className="nav-primary-button">
-            Get Started
-          </Link>
+          {accountLinks}
         </div>
 
         <button

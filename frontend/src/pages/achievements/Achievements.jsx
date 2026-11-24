@@ -18,7 +18,7 @@ import {
   FiClock
 } from "react-icons/fi";
 
-import { useAuth } from "../../context/AuthContext";
+import { useAuth } from "../../context/auth";
 import {
   getXP,
   getXPHistory,

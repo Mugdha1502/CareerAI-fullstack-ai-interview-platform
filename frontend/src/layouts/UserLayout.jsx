@@ -34,7 +34,7 @@ import {
 
 import {
   useAuth
-} from "../context/AuthContext";
+} from "../context/auth";
 
 import PlanBadge from "../components/common/PlanBadge";
 import { useSubscription } from "../context/subscription";

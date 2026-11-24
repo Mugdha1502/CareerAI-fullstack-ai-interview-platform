@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { FiCheck, FiStar, FiZap, FiInfo, FiLoader, FiAlertCircle, FiCheckCircle } from "react-icons/fi";
 
-import { useAuth } from "../../context/AuthContext";
+import { useAuth } from "../../context/auth";
 import { useSubscription } from "../../context/subscription";
 import PlanBadge from "../../components/common/PlanBadge";
 import { formatDate, formatPaise, getPlans, perPeriod } from "../../services/billingService";

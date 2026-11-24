@@ -81,7 +81,7 @@ public class PracticeService {
     /** Saves the result and completes the session. One result per session. */
     @Transactional
     public PracticeHistoryItem saveResult(String email, PracticeResultRequest request) {
-        PracticeSession session = findOwnedSession(email, request.getSessionId());
+        PracticeSession session = lockOwnedSession(email, request.getSessionId());
 
         if (resultRepository.existsBySessionId(session.getId())) {
             throw new PracticeResultAlreadySavedException();
@@ -131,7 +131,7 @@ public class PracticeService {
     public PracticeHistoryItem saveScoredSubmission(String email, ScoredSubmission submission) {
         PracticeSession session;
         if (submission.sessionId() != null) {
-            session = findOwnedSession(email, submission.sessionId());
+            session = lockOwnedSession(email, submission.sessionId());
             if (!submission.module().equals(session.getModule())) {
                 throw new InvalidPracticeResultException("This practice session belongs to a different module");
             }
@@ -232,6 +232,13 @@ public class PracticeService {
     private PracticeSession findOwnedSession(String email, Long sessionId) {
         User user = findUser(email);
         return sessionRepository.findByIdAndUserId(sessionId, user.getId())
+            .orElseThrow(PracticeSessionNotFoundException::new);
+    }
+
+    /** Locked ownership lookup: a double-submitted result waits, then sees the first one (409, not a deadlock). */
+    private PracticeSession lockOwnedSession(String email, Long sessionId) {
+        User user = findUser(email);
+        return sessionRepository.lockByIdAndUserId(sessionId, user.getId())
             .orElseThrow(PracticeSessionNotFoundException::new);
     }
 

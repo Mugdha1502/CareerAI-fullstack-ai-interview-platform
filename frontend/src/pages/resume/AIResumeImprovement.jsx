@@ -15,7 +15,7 @@ import {
   improveResume,
   updateResume
 } from "../../services/resumeService";
-import { useAuth } from "../../context/AuthContext";
+import { useAuth } from "../../context/auth";
 import { ResumeGuestNotice } from "../../components/resume/ResumePicker";
 import { useResumeList } from "../../components/resume/useResumeList";
 

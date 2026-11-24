@@ -16,7 +16,7 @@ import {
 } from "react-icons/fi";
 import { toApiError } from "../../services/api";
 import { getInterviewReport } from "../../services/interviewService";
-import { useAuth } from "../../context/AuthContext";
+import { useAuth } from "../../context/auth";
 
 const TYPE_LABELS = {
   TECHNICAL: "Technical",

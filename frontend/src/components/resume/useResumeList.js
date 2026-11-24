@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { toApiError } from "../../services/api";
 import { getResumes } from "../../services/resumeService";
-import { useAuth } from "../../context/AuthContext";
+import { useAuth } from "../../context/auth";
 
 /**
  * Loads the signed-in user's resumes for the resume tool pages.
