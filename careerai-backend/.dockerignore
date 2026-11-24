@@ -1,0 +1,15 @@
+# Keep the build context small and free of local secrets and data.
+target/
+bin/
+uploads/
+.mvn/wrapper/maven-wrapper.jar
+.idea/
+.vscode/
+.settings/
+.classpath
+.project
+*.log
+.env
+.env.*
+!.env.example
+**/application-local.properties

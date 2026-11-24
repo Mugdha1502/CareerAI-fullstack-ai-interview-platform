@@ -1,6 +1,7 @@
 # Backend deployment notes
 
 Notes for running the CareerAI Spring Boot backend outside a developer machine. Nothing here has been deployed yet.
+For the step-by-step hosting walkthrough see [deployment-guide.md](deployment-guide.md).
 
 ## 1. Profile and required variables
 
@@ -17,6 +18,7 @@ Run the deployed backend with `SPRING_PROFILES_ACTIVE=prod`. The `prod` profile 
 | `RESUME_STORAGE_PROVIDER` | Optional | `database` (prod default) or `local` with `RESUME_STORAGE_DIR` on a persistent disk |
 | `FLYWAY_BASELINE_ON_MIGRATE` | Once, for an existing database | `true` for one start only (section 5). Default `false` |
 | `PORT` / `SERVER_PORT` | Optional | Usually provided by the host |
+| `DB_POOL_SIZE` | Optional | Connection pool size (default 5; managed MySQL plans allow few connections) |
 | `GEMINI_API_KEY`, `SIMLI_API_KEY`, `JDOODLE_CLIENT_ID`, `JDOODLE_CLIENT_SECRET` | Optional | Features report "unavailable" without them |
 | `RAZORPAY_KEY_ID`, `RAZORPAY_KEY_SECRET`, `RAZORPAY_WEBHOOK_SECRET` | Optional | Test Mode keys only |
 
